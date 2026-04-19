@@ -28,7 +28,7 @@ This add-on for [Virtual Media Folders](https://github.com/soderlind/virtual-med
 
 ## MCP Integration
 
-Once activated, the abilities are automatically exposed to MCP adapters. See the [Virtual Media Folders MCP guide](https://github.com/soderlind/virtual-media-folders/blob/main/docs/mcp.md) for client configuration (Claude, GitHub Copilot, Cursor).
+Once activated, the abilities are automatically exposed to MCP adapters. See the [MCP Integration Guide](docs/mcp.md) for client configuration (Claude, GitHub Copilot, Cursor).
 
 ## Changelog
 
