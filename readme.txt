@@ -20,6 +20,10 @@ This add-on for Virtual Media Folders registers folder management operations as 
 * `vmfo/create-folder` - Creates a folder with an optional parent
 * `vmfo/add-to-folder` - Assigns one or more media items to a folder
 
+= MCP Integration =
+
+For client configuration (Claude, GitHub Copilot, Cursor) and usage examples, see the [MCP Integration Guide](https://github.com/soderlind/vmfa-ai-ability/blob/main/docs/mcp.md).
+
 == Installation ==
 
 1. Ensure Virtual Media Folders is installed and activated
