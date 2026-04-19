@@ -1,0 +1,25 @@
+{
+	"name": "soderlind/vmfa-ai-ability",
+	"description": "Exposes Virtual Media Folders operations as WordPress Abilities API tools for AI agents and MCP adapters.",
+	"type": "wordpress-plugin",
+	"license": "GPL-2.0-or-later",
+	"authors": [
+		{
+			"name": "Per Soderlind",
+			"email": "per@soderlind.no",
+			"homepage": "https://soderlind.no"
+		}
+	],
+	"require": {
+		"php": ">=8.3"
+	},
+	"autoload": {
+		"psr-4": {
+			"VMFAAiAbility\\": "src/php/"
+		}
+	},
+	"config": {
+		"optimize-autoloader": true,
+		"sort-packages": true
+	}
+}
