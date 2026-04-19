@@ -22,10 +22,9 @@ This add-on for [Virtual Media Folders](https://github.com/soderlind/virtual-med
 
 ## Installation
 
-1. Ensure Virtual Media Folders is installed and activated
-2. Upload `vmfa-ai-ability` to `/wp-content/plugins/`
-3. Run `composer install` in the plugin directory
-4. Activate the plugin through WordPress admin
+1. Download [`vmfa-ai-ability.zip`](https://github.com/soderlind/vmfa-ai-ability/releases/latest/download/vmfa-ai-ability.zip)
+2. Upload via  `Plugins → Add New → Upload Plugin`
+3. Activate via `WordPress Admin → Plugins`
 
 ## MCP Integration
 
