@@ -35,6 +35,18 @@ if ( file_exists( VMFA_AI_ABILITY_PATH . 'vendor/autoload.php' ) ) {
 	require_once VMFA_AI_ABILITY_PATH . 'vendor/autoload.php';
 }
 
+// Update checker via GitHub releases.
+if ( ! class_exists( \Soderlind\WordPress\GitHubUpdater::class ) ) {
+	require_once __DIR__ . '/class-github-updater.php';
+}
+\Soderlind\WordPress\GitHubUpdater::init(
+	github_url: 'https://github.com/soderlind/vmfa-ai-ability',
+	plugin_file: VMFA_AI_ABILITY_FILE,
+	plugin_slug: 'vmfa-ai-ability',
+	name_regex: '/vmfa-ai-ability\.zip/',
+	branch: 'main',
+);
+
 /**
  * Initialize the plugin.
  *
