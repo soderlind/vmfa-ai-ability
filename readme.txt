@@ -4,7 +4,7 @@ Tags: media, folders, ai, mcp, abilities
 Requires at least: 7.0
 Tested up to: 7.0
 Requires PHP: 8.3
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,6 +28,10 @@ This add-on for Virtual Media Folders registers folder management operations as 
 4. Activate the plugin through WordPress admin
 
 == Changelog ==
+
+= 1.1.0 =
+* Added: GitHub updater for automatic updates from releases
+* Added: GitHub Actions workflows for building release zip
 
 = 1.0.0 =
 * Initial release
