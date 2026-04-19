@@ -16,7 +16,7 @@ This add-on for [Virtual Media Folders](https://github.com/soderlind/virtual-med
 
 ## Requirements
 
-- WordPress 6.8+
+- WordPress 7.0+
 - PHP 8.3+
 - Virtual Media Folders plugin (required dependency)
 

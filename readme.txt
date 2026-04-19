@@ -1,8 +1,8 @@
 === Virtual Media Folders - AI Ability ===
 Contributors: persoderlind
 Tags: media, folders, ai, mcp, abilities
-Requires at least: 6.8
-Tested up to: 6.8
+Requires at least: 7.0
+Tested up to: 7.0
 Requires PHP: 8.3
 Stable tag: 1.0.0
 License: GPL-2.0-or-later
