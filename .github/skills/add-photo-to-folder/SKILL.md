@@ -20,7 +20,7 @@ Before using this skill, ensure you have:
 1. **WordPress site** with these plugins active:
    - [Virtual Media Folders](https://github.com/soderlind/virtual-media-folders) (free)
    - [VMFA AI Ability](https://github.com/soderlind/vmfa-ai-ability) (add-on)
-   - [WordPress MCP Adapter](https://wordpress.org/plugins/mcp-adapter/) (connects MCP to WordPress)
+   - [WordPress MCP Adapter](https://github.com/wordpress/mcp-adapter) (connects MCP to WordPress)
 
 2. **MCP server configured** in your AI client (VS Code, Claude Desktop, Cursor):
    - Endpoint: `https://your-site.com/wp-json/mcp/mcp-adapter-default-server`
