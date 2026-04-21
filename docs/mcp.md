@@ -183,6 +183,12 @@ A reusable skill file is available at:
 
 [`.github/skills/add-photo-to-folder/SKILL.md`](../.github/skills/add-photo-to-folder/SKILL.md)
 
+Install with:
+
+```bash
+npx skills add soderlind/vmfa-ai-ability@add-photo-to-folder
+```
+
 It defines a deterministic flow that:
 
 1. Extracts a topic from image content.
