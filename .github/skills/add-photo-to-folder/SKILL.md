@@ -250,4 +250,4 @@ Report a compact summary to the user:
 
 - [MCP Integration Guide](https://github.com/soderlind/vmfa-ai-ability/blob/main/docs/mcp.md) — Full MCP setup and curl examples
 - [Virtual Media Folders](https://github.com/soderlind/virtual-media-folders) — Core plugin documentation
-- [WordPress MCP Adapter](https://wordpress.org/plugins/mcp-adapter/) — MCP server for WordPress
+- [WordPress MCP Adapter](https://github.com/wordpress/mcp-adapter) — MCP server for WordPress
