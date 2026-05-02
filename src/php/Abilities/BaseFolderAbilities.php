@@ -354,7 +354,25 @@ final class BaseFolderAbilities extends AbstractAbilities {
 					'required'             => [ 'folder_id', 'attachment_ids' ],
 					'additionalProperties' => false,
 				],
-				'output_schema'       => [ 'type' => 'object' ],
+				'output_schema'       => [
+					'type'       => 'object',
+					'properties' => [
+						'success'         => [ 'type' => 'boolean' ],
+						'folder_id'       => [ 'type' => 'integer' ],
+						'processed_count' => [ 'type' => 'integer' ],
+						'results'         => [
+							'type'  => 'array',
+							'items' => [
+								'type'       => 'object',
+								'properties' => [
+									'media_id' => [ 'type' => 'integer' ],
+									'success'  => [ 'type' => 'boolean' ],
+									'message'  => [ 'type' => 'string' ],
+								],
+							],
+						],
+					],
+				],
 				'execute_callback'    => [ self::class, 'execute_remove_from_folder' ],
 				'permission_callback' => [ self::class, 'require_upload' ],
 				'meta'                => self::mcp_meta( readonly: false, idempotent: true ),
@@ -653,11 +671,29 @@ final class BaseFolderAbilities extends AbstractAbilities {
 			);
 		}
 
-		return self::rest_request(
-			'DELETE',
-			'/vmfo/v1/folders/' . $folder_id . '/media',
-			[ 'attachment_ids' => $attachment_ids ]
-		);
+		// The REST endpoint accepts one media_id at a time; loop per attachment.
+		$results = [];
+		foreach ( $attachment_ids as $attachment_id ) {
+			$r = self::rest_request(
+				'DELETE',
+				'/vmfo/v1/folders/' . $folder_id . '/media',
+				[ 'media_id' => $attachment_id ]
+			);
+			$results[] = [
+				'media_id'  => $attachment_id,
+				'success'   => ! is_wp_error( $r ),
+				'message'   => is_wp_error( $r ) ? $r->get_error_message() : 'Removed.',
+			];
+		}
+
+		$success_count = count( array_filter( $results, static fn( $r ) => $r['success'] ) );
+
+		return [
+			'success'         => $success_count === count( $attachment_ids ),
+			'folder_id'       => $folder_id,
+			'processed_count' => count( $results ),
+			'results'         => $results,
+		];
 	}
 
 	/**
