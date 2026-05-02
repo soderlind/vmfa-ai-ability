@@ -1,6 +1,6 @@
 # Media Cleanup Abilities
 
-These abilities are active when the **vmfa-media-cleanup** add-on is installed and active (`VMFA_MEDIA_CLEANUP_VERSION` defined).
+These abilities are active when the **[vmfa-media-cleanup](https://github.com/soderlind/vmfa-media-cleanup)** add-on is installed and active (`VMFA_MEDIA_CLEANUP_VERSION` defined).
 
 **Category slug:** `vmfo-media-cleanup`  
 **REST namespace:** `vmfa-cleanup/v1`

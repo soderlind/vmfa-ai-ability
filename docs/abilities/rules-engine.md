@@ -1,6 +1,6 @@
 # Rules Engine Abilities
 
-These abilities are active when the **vmfa-rules-engine** add-on is installed and active (`VMFA_RULES_ENGINE_VERSION` defined).
+These abilities are active when the **[vmfa-rules-engine](https://github.com/soderlind/vmfa-rules-engine)** add-on is installed and active (`VMFA_RULES_ENGINE_VERSION` defined).
 
 **Category slug:** `vmfo-rules-engine`  
 **REST namespace:** `vmfa-rules/v1`

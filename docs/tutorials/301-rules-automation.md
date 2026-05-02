@@ -2,7 +2,7 @@
 
 This tutorial shows how to use the Rules Engine add-on to define automatic folder-assignment rules, preview their impact, and apply them to your existing media library.
 
-**Plugins required:** Virtual Media Folders · VMFA AI Ability · vmfa-rules-engine · [WordPress MCP Adapter](https://github.com/wordpress/mcp-adapter)
+**Plugins required:** [Virtual Media Folders](https://github.com/soderlind/virtual-media-folders) · [VMFA AI Ability](https://github.com/soderlind/vmfa-ai-ability) · [vmfa-rules-engine](https://github.com/soderlind/vmfa-rules-engine) · [WordPress MCP Adapter](https://github.com/wordpress/mcp-adapter)
 
 ---
 

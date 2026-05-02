@@ -1,6 +1,6 @@
 # Folder Management Abilities
 
-These abilities are always active when the **Virtual Media Folders** base plugin is installed and the **VMFA AI Ability** plugin is active. No add-on is required.
+These abilities are always active when the **[Virtual Media Folders](https://github.com/soderlind/virtual-media-folders)** base plugin is installed and the **[VMFA AI Ability](https://github.com/soderlind/vmfa-ai-ability)** plugin is active. No add-on is required.
 
 **Category slug:** `vmfo-folder-management`
 

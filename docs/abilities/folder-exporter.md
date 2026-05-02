@@ -1,6 +1,6 @@
 # Folder Exporter Abilities
 
-These abilities are active when the **vmfa-folder-exporter** add-on is installed and active (`VMFA_FOLDER_EXPORTER_VERSION` defined).
+These abilities are active when the **[vmfa-folder-exporter](https://github.com/soderlind/vmfa-folder-exporter)** add-on is installed and active (`VMFA_FOLDER_EXPORTER_VERSION` defined).
 
 **Category slug:** `vmfo-folder-exporter`  
 **REST namespace:** `vmfa-folder-exporter/v1`

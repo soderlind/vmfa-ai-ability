@@ -1,6 +1,6 @@
 # AI Organizer Abilities
 
-These abilities are active when the **vmfa-ai-organizer** add-on is installed and active (`VMFA_AI_ORGANIZER_VERSION` defined).
+These abilities are active when the **[vmfa-ai-organizer](https://github.com/soderlind/vmfa-ai-organizer)** add-on is installed and active (`VMFA_AI_ORGANIZER_VERSION` defined).
 
 **Category slug:** `vmfo-ai-organizer`  
 **REST namespace:** `vmfa/v1` (AI Organizer registers its scan routes on the shared base namespace)
