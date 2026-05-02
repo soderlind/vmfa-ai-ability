@@ -2,6 +2,8 @@
 
 Exposes Virtual Media Folders operations as WordPress Abilities API tools for AI agents and MCP adapters.
 
+[Description](#description) | [Requirements](#requirements) | [Installation](#installation) | [MCP Integration](#mcp-integration) | [Tutorials](#tutorials) | [Changelog](CHANGELOG.md)
+
 ## Description
 
 This add-on for [Virtual Media Folders](https://github.com/soderlind/virtual-media-folders) registers folder management, rules, media cleanup, ZIP export, and AI-powered batch organisation as WordPress Abilities API tools, making them available to AI agents and MCP (Model Context Protocol) adapters.
