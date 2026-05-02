@@ -81,7 +81,15 @@ Add-on abilities are registered automatically when the corresponding add-on plug
 Once activated, all abilities are automatically exposed to MCP adapters. See:
 
 - [docs/mcp.md](docs/mcp.md) — authentication, endpoint, and client configuration (Claude, GitHub Copilot, Cursor)
-- [docs/README.md](docs/README.md) — full ability reference and tutorials
+- [docs/README.md](docs/README.md) — full ability reference
+
+## Tutorials
+
+| Level | Tutorial |
+|---|---|
+| 101 | [Upload & Organise a Photo](docs/tutorials/101-first-folder-workflow.md) |
+| 201 | [Detect & Clean Up Unused Media](docs/tutorials/201-media-cleanup.md) |
+| 301 | [Automate Folder Assignment with Rules](docs/tutorials/301-rules-automation.md) |
 
 ## Changelog
 
