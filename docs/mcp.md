@@ -1,142 +1,103 @@
-# MCP Integration Guide
+# MCP Authentication & Endpoint Reference
 
-This guide shows how to use MCP with **VMFA AI Ability** (add-on for Virtual Media Folders) to:
+> For ability details see the [ability reference docs](abilities/) and for step-by-step walkthroughs see the [tutorials](tutorials/).
 
-1. Upload an image.
-2. Find the best folder.
-3. Create the folder when missing.
-4. Add the image to the folder.
+## Endpoint
 
-## Prerequisites
-
-- WordPress with Virtual Media Folders and VMFA AI Ability active.
-- WordPress MCP Adapter active (default server).
-- A user with:
-  - `upload_files` for listing folders and assigning media.
-  - `manage_categories` for creating folders.
-- An Application Password for that user.
-
-Default MCP endpoint:
-
-`https://example.com/wp-json/mcp/mcp-adapter-default-server`
-
-## MCP Tools Exposed By This Plugin
-
-VMFA AI Ability exposes these abilities as MCP-compatible tools through the adapter gateway:
-
-- `vmfo/list-folders` (read-only)
-- `vmfo/create-folder` (write)
-- `vmfo/add-to-folder` (write)
-
-All calls are made through the gateway tool `mcp-adapter-execute-ability`.
-
-## Step 1: Upload The Image
-
-Upload is not handled by `vmfo/*` abilities. Use the WordPress media endpoint first:
-
-```bash
-curl -X POST "https://example.com/wp-json/wp/v2/media" \
-  -u "username:application-password" \
-  -H "Content-Disposition: attachment; filename=beach-sunset.jpg" \
-  -H "Content-Type: image/jpeg" \
-  --data-binary "@/absolute/path/beach-sunset.jpg"
+```
+POST https://example.com/wp-json/mcp/mcp-adapter-default-server
 ```
 
-Take the returned media `id` (for example `1234`).
+Replace `example.com` with your site domain. The path is fixed by the WordPress MCP Adapter plugin.
 
-## Step 2: Discover Candidate Folder
+## Authentication
 
-Call `tools/call` through the gateway and resolve folder IDs by path:
+All requests use HTTP Basic auth with a WordPress **Application Password**:
+
+```
+Authorization: Basic base64(username:application-password)
+```
+
+Generate an Application Password in **Users → Profile → Application Passwords** in the WordPress admin.
 
 ```bash
-curl -X POST "https://example.com/wp-json/mcp/mcp-adapter-default-server" \
-  -u "username:application-password" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "jsonrpc": "2.0",
-    "id": 2,
-    "method": "tools/call",
-    "params": {
-      "name": "mcp-adapter-execute-ability",
-      "arguments": {
-        "ability_name": "vmfo/list-folders",
-        "parameters": {
-          "search": "travel",
-          "hide_empty": false
-        }
-      }
+# Convenience: pass credentials with -u; curl handles the base64 encoding.
+curl -u "admin:xxxx xxxx xxxx xxxx xxxx xxxx" ...
+```
+
+## Required Permissions
+
+| Capability | Needed for |
+|---|---|
+| `upload_files` | Listing folders, adding/removing media, read-only abilities |
+| `manage_categories` | Creating, updating, or deleting folders; archiving media |
+| `manage_options` | Rules, media cleanup actions, AI Organizer scan |
+
+Administrators have all three. You can create a dedicated lower-privilege user with only `upload_files` + `manage_categories` for read/write folder operations without site-wide admin access.
+
+## Request Format
+
+Every call uses JSON-RPC 2.0 over HTTP POST:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "tools/call",
+  "params": {
+    "name": "mcp-adapter-execute-ability",
+    "arguments": {
+      "ability_name": "<ability-name>",
+      "parameters": { }
     }
-  }'
+  }
+}
 ```
 
-Use `path` to disambiguate duplicate names, then select the folder `id`.
+```
+Content-Type: application/json
+```
 
-## Step 3: Create Folder If Missing
+## Response Format
 
-If no matching folder exists, create one:
+Successful response:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": { "content": [ { "type": "text", "text": "..." } ] }
+}
+```
+
+The ability result is JSON-encoded inside `result.content[0].text`.
+
+Error response (ability returned `WP_Error`, or JSON-RPC error):
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "error": { "code": -32000, "message": "Ability execution failed: ..." }
+}
+```
+
+## Discovering Available Abilities
+
+To list all registered abilities on a site:
 
 ```bash
-curl -X POST "https://example.com/wp-json/mcp/mcp-adapter-default-server" \
-  -u "username:application-password" \
+curl -s -X POST "https://example.com/wp-json/mcp/mcp-adapter-default-server" \
+  -u "admin:xxxx xxxx xxxx xxxx xxxx xxxx" \
   -H "Content-Type: application/json" \
-  -d '{
-    "jsonrpc": "2.0",
-    "id": 3,
-    "method": "tools/call",
-    "params": {
-      "name": "mcp-adapter-execute-ability",
-      "arguments": {
-        "ability_name": "vmfo/create-folder",
-        "parameters": {
-          "name": "Travel",
-          "parent_id": 0
-        }
-      }
-    }
-  }'
+  -d '{ "jsonrpc": "2.0", "id": 1, "method": "tools/list", "params": {} }'
 ```
 
-Response includes `id`, `name`, `parent_id`, `path`, and `count`.
+Only abilities with `meta.mcp.public = true` are exposed. All abilities registered by VMFA AI Ability include this flag.
 
-## Step 4: Assign Uploaded Image To Folder
+## Client Configuration
 
-Use the folder `id` from step 2 or 3 and the media `id` from step 1:
-
-```bash
-curl -X POST "https://example.com/wp-json/mcp/mcp-adapter-default-server" \
-  -u "username:application-password" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "jsonrpc": "2.0",
-    "id": 4,
-    "method": "tools/call",
-    "params": {
-      "name": "mcp-adapter-execute-ability",
-      "arguments": {
-        "ability_name": "vmfo/add-to-folder",
-        "parameters": {
-          "folder_id": 2285,
-          "attachment_ids": [1234]
-        }
-      }
-    }
-  }'
-```
-
-## One-Pass Agent Workflow
-
-For each image:
-
-1. Upload image and collect `attachment_id`.
-2. Run `vmfo/list-folders` with topic keywords.
-3. If folder missing, run `vmfo/create-folder`.
-4. Run `vmfo/add-to-folder` with `attachment_ids`.
-
-## Quick Client Configuration
-
-Configuration formats change over time across clients. Use these as templates and replace values.
-
-### Claude Desktop (MCP)
+### Claude Desktop
 
 ```json
 {
@@ -162,8 +123,6 @@ Configuration formats change over time across clients. Use these as templates an
 
 ### Cursor
 
-Add an MCP HTTP server entry in Cursor MCP settings:
-
 ```json
 {
   "mcpServers": {
@@ -177,40 +136,16 @@ Add an MCP HTTP server entry in Cursor MCP settings:
 }
 ```
 
-## Skill: Auto-Place Photos By Image Content
-
-A reusable skill file is available at:
-
-[`.github/skills/add-photo-to-folder/SKILL.md`](../.github/skills/add-photo-to-folder/SKILL.md)
-
-Install with:
-
-```bash
-npx skills add soderlind/vmfa-ai-ability@add-photo-to-folder
-```
-
-It defines a deterministic flow that:
-
-1. Extracts a topic from image content.
-2. Finds matching folder paths.
-3. Creates a folder if allowed and needed.
-4. Assigns uploaded media IDs to the selected folder.
-
 ## Troubleshooting
 
-- `401` or `403` on tools calls:
-  - Verify Application Password and user capabilities.
-  - `vmfo/create-folder` requires `manage_categories`.
-- Tool not found:
-  - Run `tools/list` first and confirm `mcp-adapter-execute-ability` exists.
-- Folder mismatch:
-  - Resolve by `path`, not only by `name`.
-- Upload succeeded but assignment failed:
-  - Confirm media ID is an attachment and folder ID exists.
+| Symptom | Likely cause |
+|---|---|
+| `401` or `403` | Wrong Application Password or user lacks required capability |
+| Tool not found | `mcp-adapter-execute-ability` not listed in `tools/list` — check adapter plugin is active |
+| Folder mismatch | Resolve folders by `path`, not just `name` |
+| Upload OK but assignment failed | Confirm the media ID is an attachment post and folder ID exists |
 
-## Optional Smoke Test
-
-Run the included script:
+## Smoke Test
 
 ```bash
 MCP_BASE_URL="https://example.com/wp-json/mcp/mcp-adapter-default-server" \
@@ -219,12 +154,8 @@ MCP_APP_PASS="xxxx xxxx xxxx xxxx xxxx xxxx" \
 ./scripts/mcp-adapter-smoke-test.sh
 ```
 
-Enable mutating create-folder test:
+Add `VMFO_RUN_MUTATING_TESTS=1` to enable write-operation tests (creates and deletes a test folder).
 
-```bash
-MCP_BASE_URL="https://example.com/wp-json/mcp/mcp-adapter-default-server" \
-MCP_USER="per" \
-MCP_APP_PASS="xxxx xxxx xxxx xxxx xxxx xxxx" \
-VMFO_RUN_MUTATING_TESTS=1 \
-./scripts/mcp-adapter-smoke-test.sh
-```
+## Skill: Auto-Place Photos By Image Content
+
+A reusable agent skill is available at [`.github/skills/add-photo-to-folder/SKILL.md`](../.github/skills/add-photo-to-folder/SKILL.md). It implements the full upload → suggest → create → assign flow described in [Tutorial 101](tutorials/101-first-folder-workflow.md).
