@@ -22,7 +22,7 @@ Add-on abilities are registered automatically when the corresponding add-on plug
 | `vmfo/remove-from-folder` | Remove one or more media items from a folder |
 | `vmfo/get-suggestions` | Get AI-powered folder suggestions for a media item |
 
-#### Rules Engine — requires vmfa-rules-engine
+#### Rules Engine — requires [vmfa-rules-engine](https://github.com/soderlind/vmfa-rules-engine)
 
 | Ability | Description |
 |---|---|
@@ -33,7 +33,7 @@ Add-on abilities are registered automatically when the corresponding add-on plug
 | `vmfo-rules/preview` | Preview which media a rule would match (dry run) |
 | `vmfo-rules/apply` | Apply rules to existing media |
 
-#### Media Cleanup — requires vmfa-media-cleanup
+#### Media Cleanup — requires [vmfa-media-cleanup](https://github.com/soderlind/vmfa-media-cleanup)
 
 | Ability | Description |
 |---|---|
@@ -46,7 +46,7 @@ Add-on abilities are registered automatically when the corresponding add-on plug
 | `vmfo-cleanup/trash` | Move media to the WordPress trash |
 | `vmfo-cleanup/delete` | Permanently delete media and files from disk |
 
-#### Folder Exporter — requires vmfa-folder-exporter
+#### Folder Exporter — requires [vmfa-folder-exporter](https://github.com/soderlind/vmfa-folder-exporter)
 
 | Ability | Description |
 |---|---|
@@ -55,7 +55,7 @@ Add-on abilities are registered automatically when the corresponding add-on plug
 | `vmfo-folder-exporter/list-exports` | List all recent export jobs |
 | `vmfo-folder-exporter/delete-export` | Delete an export job and its ZIP file |
 
-#### AI Organizer — requires vmfa-ai-organizer
+#### AI Organizer — requires [vmfa-ai-organizer](https://github.com/soderlind/vmfa-ai-organizer)
 
 | Ability | Description |
 |---|---|
