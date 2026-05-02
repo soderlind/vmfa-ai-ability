@@ -4,7 +4,7 @@ Tags: media, folders, ai, mcp, abilities
 Requires at least: 7.0
 Tested up to: 7.0
 Requires PHP: 8.3
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,11 @@ For client configuration (Claude, GitHub Copilot, Cursor) and usage examples, se
 4. Activate the plugin through WordPress admin
 
 == Changelog ==
+
+= 1.2.0 =
+* Added: MCP abilities for base plugin and 4 add-ons (Rules Engine, Media Cleanup, Folder Exporter, AI Organizer)
+* Fixed: Remove from folder now sends media_id per attachment to match REST endpoint signature
+* Documentation: Per-ability reference docs, 101/201/301 tutorials, refactored mcp.md to auth reference
 
 = 1.1.0 =
 * Added: GitHub updater for automatic updates from releases
