@@ -2,7 +2,7 @@
 
 This tutorial shows how to use the Media Cleanup add-on abilities to discover unused, duplicate, or oversized files and bulk-action them safely.
 
-**Plugins required:** Virtual Media Folders · VMFA AI Ability · vmfa-media-cleanup · WordPress MCP Adapter
+**Plugins required:** Virtual Media Folders · VMFA AI Ability · vmfa-media-cleanup · [WordPress MCP Adapter](https://github.com/wordpress/mcp-adapter)
 
 ---
 

@@ -70,7 +70,7 @@ Add-on abilities are registered automatically when the corresponding add-on plug
 - WordPress 7.0+
 - PHP 8.3+
 - [Virtual Media Folders](https://github.com/soderlind/virtual-media-folders) (required)
-- [WordPress MCP Adapter](https://github.com/soderlind/mcp-adapter) (required to expose abilities as MCP tools)
+- [WordPress MCP Adapter](https://github.com/wordpress/mcp-adapter) (required to expose abilities as MCP tools)
 
 ## Installation
 

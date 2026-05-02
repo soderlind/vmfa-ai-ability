@@ -2,7 +2,7 @@
 
 This is the core workflow: upload an image to WordPress, find the right folder, create one if it doesn't exist, and assign the image.
 
-**Plugins required:** Virtual Media Folders · VMFA AI Ability · WordPress MCP Adapter
+**Plugins required:** Virtual Media Folders · VMFA AI Ability · [WordPress MCP Adapter](https://github.com/wordpress/mcp-adapter)
 
 ---
 

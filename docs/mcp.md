@@ -8,7 +8,7 @@
 POST https://example.com/wp-json/mcp/mcp-adapter-default-server
 ```
 
-Replace `example.com` with your site domain. The path is fixed by the WordPress MCP Adapter plugin.
+Replace `example.com` with your site domain. The path is fixed by the [WordPress MCP Adapter](https://github.com/wordpress/mcp-adapter) plugin.
 
 ## Authentication
 

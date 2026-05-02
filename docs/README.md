@@ -1,6 +1,6 @@
 # VMFA AI Ability — Reference
 
-VMFA AI Ability bridges Virtual Media Folders and its add-ons with the [WordPress Abilities API](https://developer.wordpress.org/apis/abilities/) and the MCP Adapter, making folder management, rules, media cleanup, ZIP exports, and AI-powered batch organisation available as MCP tools that any AI assistant can call.
+VMFA AI Ability bridges Virtual Media Folders and its add-ons with the [WordPress Abilities API](https://developer.wordpress.org/apis/abilities/) and the [MCP Adapter](https://github.com/wordpress/mcp-adapter), making folder management, rules, media cleanup, ZIP exports, and AI-powered batch organisation available as MCP tools that any AI assistant can call.
 
 ## How It Works
 
@@ -30,7 +30,7 @@ POST to `https://example.com/wp-json/mcp/mcp-adapter-default-server` with a `Bas
 | WordPress 6.8+ | Required for the Abilities API |
 | Virtual Media Folders | Base plugin — always required |
 | VMFA AI Ability | This plugin |
-| WordPress MCP Adapter | Exposes abilities as MCP tools |
+| [WordPress MCP Adapter](https://github.com/wordpress/mcp-adapter) | Exposes abilities as MCP tools |
 | Application Password | For per-user authentication |
 
 ---
