@@ -33,3 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `vmfo/create-folder` ability - Creates a folder with optional parent
 - `vmfo/add-to-folder` ability - Assigns media items to a folder
 - MCP adapter support for AI agents (Claude, Copilot, Cursor)
+
+[1.2.0]: https://github.com/soderlind/vmfa-ai-ability/compare/1.1.0...1.2.0
+[1.1.0]: https://github.com/soderlind/vmfa-ai-ability/compare/1.0.0...1.1.0
+[1.0.0]: https://github.com/soderlind/vmfa-ai-ability/releases/tag/1.0.0
