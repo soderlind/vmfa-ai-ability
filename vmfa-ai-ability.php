@@ -3,7 +3,7 @@
  * Plugin Name:       Virtual Media Folders - AI Ability
  * Plugin URI:        https://github.com/soderlind/vmfa-ai-ability
  * Description:       Exposes Virtual Media Folders operations as WordPress Abilities API tools for AI agents and MCP adapters. Add-on for Virtual Media Folders.
- * Version:           1.1.0
+ * Version:           1.2.0
  * Requires at least: 6.8
  * Requires PHP:      8.3
  * Requires Plugins:  virtual-media-folders
