@@ -12,13 +12,13 @@ Replace `example.com` with your site domain. The path is fixed by the [WordPress
 
 ## Authentication
 
-All requests use HTTP Basic auth with a WordPress **Application Password**:
+All requests use HTTP Basic auth with a WordPress **[Application Password](https://developer.wordpress.org/advanced-administration/security/application-passwords/)**:
 
 ```
 Authorization: Basic base64(username:application-password)
 ```
 
-Generate an Application Password in **Users → Profile → Application Passwords** in the WordPress admin.
+Generate an [Application Password](https://developer.wordpress.org/advanced-administration/security/application-passwords/) in **Users → Profile → Application Passwords** in the WordPress admin.
 
 ```bash
 # Convenience: pass credentials with -u; curl handles the base64 encoding.

@@ -21,7 +21,7 @@ Abilities are called via the `mcp-adapter-execute-ability` gateway tool:
 }
 ```
 
-POST to `https://example.com/wp-json/mcp/mcp-adapter-default-server` with a `Basic` header using a WordPress Application Password. See [mcp.md](mcp.md) for authentication details.
+POST to `https://example.com/wp-json/mcp/mcp-adapter-default-server` with a `Basic` header using a WordPress [Application Password](https://developer.wordpress.org/advanced-administration/security/application-passwords/). See [mcp.md](mcp.md) for authentication details.
 
 ## Prerequisites
 
@@ -31,7 +31,7 @@ POST to `https://example.com/wp-json/mcp/mcp-adapter-default-server` with a `Bas
 | [Virtual Media Folders](https://github.com/soderlind/virtual-media-folders) | Base plugin — always required |
 | [VMFA AI Ability](https://github.com/soderlind/vmfa-ai-ability) | This plugin |
 | [WordPress MCP Adapter](https://github.com/wordpress/mcp-adapter) | Exposes abilities as MCP tools |
-| Application Password | For per-user authentication |
+| [Application Password](https://developer.wordpress.org/advanced-administration/security/application-passwords/) | For per-user authentication |
 
 ---
 
