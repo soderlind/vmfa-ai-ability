@@ -22,7 +22,7 @@ Generate an [Application Password](https://developer.wordpress.org/advanced-admi
 
 ```bash
 # Convenience: pass credentials with -u; curl handles the base64 encoding.
-curl -u "admin:xxxx xxxx xxxx xxxx xxxx xxxx" ...
+curl -u "username:xxxx xxxx xxxx xxxx xxxx xxxx" ...
 ```
 
 ## Required Permissions
@@ -88,7 +88,7 @@ To list all registered abilities on a site:
 
 ```bash
 curl -s -X POST "https://example.com/wp-json/mcp/mcp-adapter-default-server" \
-  -u "admin:xxxx xxxx xxxx xxxx xxxx xxxx" \
+  -u "username:xxxx xxxx xxxx xxxx xxxx xxxx" \
   -H "Content-Type: application/json" \
   -d '{ "jsonrpc": "2.0", "id": 1, "method": "tools/list", "params": {} }'
 ```

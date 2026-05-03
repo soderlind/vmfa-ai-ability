@@ -23,7 +23,7 @@ Media upload is handled by the standard WordPress REST API, not an ability. Uplo
 
 ```bash
 curl -s -X POST "https://example.com/wp-json/wp/v2/media" \
-  -u "admin:xxxx xxxx xxxx xxxx xxxx xxxx" \
+  -u "username:xxxx xxxx xxxx xxxx xxxx xxxx" \
   -H "Content-Disposition: attachment; filename=beach-sunset.jpg" \
   -H "Content-Type: image/jpeg" \
   --data-binary "@/path/to/beach-sunset.jpg"
@@ -45,7 +45,7 @@ Search existing folders by a keyword from the filename or context:
 
 ```bash
 curl -s -X POST "https://example.com/wp-json/mcp/mcp-adapter-default-server" \
-  -u "admin:xxxx xxxx xxxx xxxx xxxx xxxx" \
+  -u "username:xxxx xxxx xxxx xxxx xxxx xxxx" \
   -H "Content-Type: application/json" \
   -d '{
     "jsonrpc": "2.0", "id": 2, "method": "tools/call",
@@ -83,7 +83,7 @@ If no suitable folder exists, create one. Use `parent_id` to nest it under an ex
 
 ```bash
 curl -s -X POST "https://example.com/wp-json/mcp/mcp-adapter-default-server" \
-  -u "admin:xxxx xxxx xxxx xxxx xxxx xxxx" \
+  -u "username:xxxx xxxx xxxx xxxx xxxx xxxx" \
   -H "Content-Type: application/json" \
   -d '{
     "jsonrpc": "2.0", "id": 3, "method": "tools/call",
@@ -111,7 +111,7 @@ Save the new folder `id` — here `99`.
 
 ```bash
 curl -s -X POST "https://example.com/wp-json/mcp/mcp-adapter-default-server" \
-  -u "admin:xxxx xxxx xxxx xxxx xxxx xxxx" \
+  -u "username:xxxx xxxx xxxx xxxx xxxx xxxx" \
   -H "Content-Type: application/json" \
   -d '{
     "jsonrpc": "2.0", "id": 4, "method": "tools/call",
@@ -144,7 +144,7 @@ Before committing to a folder, you can ask the AI Organizer for a confidence-ran
 
 ```bash
 curl -s -X POST "https://example.com/wp-json/mcp/mcp-adapter-default-server" \
-  -u "admin:xxxx xxxx xxxx xxxx xxxx xxxx" \
+  -u "username:xxxx xxxx xxxx xxxx xxxx xxxx" \
   -H "Content-Type: application/json" \
   -d '{
     "jsonrpc": "2.0", "id": 5, "method": "tools/call",

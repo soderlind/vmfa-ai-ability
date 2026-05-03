@@ -24,7 +24,7 @@ Before starting a scan, get a quick overview of the last completed scan's findin
 
 ```bash
 curl -s -X POST "https://example.com/wp-json/mcp/mcp-adapter-default-server" \
-  -u "admin:xxxx xxxx xxxx xxxx xxxx xxxx" \
+  -u "username:xxxx xxxx xxxx xxxx xxxx xxxx" \
   -H "Content-Type: application/json" \
   -d '{
     "jsonrpc": "2.0", "id": 1, "method": "tools/call",
@@ -58,7 +58,7 @@ Start a scan limited to unused and duplicate detection:
 
 ```bash
 curl -s -X POST "https://example.com/wp-json/mcp/mcp-adapter-default-server" \
-  -u "admin:xxxx xxxx xxxx xxxx xxxx xxxx" \
+  -u "username:xxxx xxxx xxxx xxxx xxxx xxxx" \
   -H "Content-Type: application/json" \
   -d '{
     "jsonrpc": "2.0", "id": 2, "method": "tools/call",
@@ -86,7 +86,7 @@ Call `get-scan-status` repeatedly until `status` is `completed` (or `failed`):
 
 ```bash
 curl -s -X POST "https://example.com/wp-json/mcp/mcp-adapter-default-server" \
-  -u "admin:xxxx xxxx xxxx xxxx xxxx xxxx" \
+  -u "username:xxxx xxxx xxxx xxxx xxxx xxxx" \
   -H "Content-Type: application/json" \
   -d '{
     "jsonrpc": "2.0", "id": 3, "method": "tools/call",
@@ -131,7 +131,7 @@ Retrieve the first page of unused media items:
 
 ```bash
 curl -s -X POST "https://example.com/wp-json/mcp/mcp-adapter-default-server" \
-  -u "admin:xxxx xxxx xxxx xxxx xxxx xxxx" \
+  -u "username:xxxx xxxx xxxx xxxx xxxx xxxx" \
   -H "Content-Type: application/json" \
   -d '{
     "jsonrpc": "2.0", "id": 4, "method": "tools/call",
@@ -170,7 +170,7 @@ Trash is reversible — prefer it over permanent deletion.
 
 ```bash
 curl -s -X POST "https://example.com/wp-json/mcp/mcp-adapter-default-server" \
-  -u "admin:xxxx xxxx xxxx xxxx xxxx xxxx" \
+  -u "username:xxxx xxxx xxxx xxxx xxxx xxxx" \
   -H "Content-Type: application/json" \
   -d '{
     "jsonrpc": "2.0", "id": 5, "method": "tools/call",

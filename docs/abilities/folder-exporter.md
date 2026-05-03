@@ -50,7 +50,7 @@ Starts an asynchronous ZIP export of a folder. Returns a `job_id` immediately; t
 
 ```bash
 curl -s -X POST "https://example.com/wp-json/mcp/mcp-adapter-default-server" \
-  -u "admin:xxxx xxxx xxxx xxxx xxxx xxxx" \
+  -u "username:xxxx xxxx xxxx xxxx xxxx xxxx" \
   -H "Content-Type: application/json" \
   -d '{
     "jsonrpc": "2.0", "id": 1, "method": "tools/call",
@@ -107,7 +107,7 @@ Same shape as `start-export`, with updated `status`, `progress`, `file_name`, `f
 
 ```bash
 curl -s -X POST "https://example.com/wp-json/mcp/mcp-adapter-default-server" \
-  -u "admin:xxxx xxxx xxxx xxxx xxxx xxxx" \
+  -u "username:xxxx xxxx xxxx xxxx xxxx xxxx" \
   -H "Content-Type: application/json" \
   -d '{
     "jsonrpc": "2.0", "id": 1, "method": "tools/call",
@@ -154,7 +154,7 @@ An array of export job objects (same shape as `get-export-status`).
 
 ```bash
 curl -s -X POST "https://example.com/wp-json/mcp/mcp-adapter-default-server" \
-  -u "admin:xxxx xxxx xxxx xxxx xxxx xxxx" \
+  -u "username:xxxx xxxx xxxx xxxx xxxx xxxx" \
   -H "Content-Type: application/json" \
   -d '{
     "jsonrpc": "2.0", "id": 1, "method": "tools/call",
@@ -191,7 +191,7 @@ Deletes an export job record and removes the associated ZIP file from disk.
 
 ```bash
 curl -s -X POST "https://example.com/wp-json/mcp/mcp-adapter-default-server" \
-  -u "admin:xxxx xxxx xxxx xxxx xxxx xxxx" \
+  -u "username:xxxx xxxx xxxx xxxx xxxx xxxx" \
   -H "Content-Type: application/json" \
   -d '{
     "jsonrpc": "2.0", "id": 1, "method": "tools/call",

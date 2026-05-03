@@ -43,7 +43,7 @@ Returns all folders with their IDs, names, parent IDs, full paths, and media cou
 
 ```bash
 curl -s -X POST "https://example.com/wp-json/mcp/mcp-adapter-default-server" \
-  -u "admin:xxxx xxxx xxxx xxxx xxxx xxxx" \
+  -u "username:xxxx xxxx xxxx xxxx xxxx xxxx" \
   -H "Content-Type: application/json" \
   -d '{
     "jsonrpc": "2.0", "id": 1, "method": "tools/call",
@@ -90,7 +90,7 @@ Creates a new folder, optionally nested under a parent.
 
 ```bash
 curl -s -X POST "https://example.com/wp-json/mcp/mcp-adapter-default-server" \
-  -u "admin:xxxx xxxx xxxx xxxx xxxx xxxx" \
+  -u "username:xxxx xxxx xxxx xxxx xxxx xxxx" \
   -H "Content-Type: application/json" \
   -d '{
     "jsonrpc": "2.0", "id": 1, "method": "tools/call",
@@ -139,7 +139,7 @@ Assigns one or more media attachments to a folder.
 
 ```bash
 curl -s -X POST "https://example.com/wp-json/mcp/mcp-adapter-default-server" \
-  -u "admin:xxxx xxxx xxxx xxxx xxxx xxxx" \
+  -u "username:xxxx xxxx xxxx xxxx xxxx xxxx" \
   -H "Content-Type: application/json" \
   -d '{
     "jsonrpc": "2.0", "id": 1, "method": "tools/call",
@@ -188,7 +188,7 @@ Renames a folder or moves it to a new parent. All fields except `folder_id` are 
 
 ```bash
 curl -s -X POST "https://example.com/wp-json/mcp/mcp-adapter-default-server" \
-  -u "admin:xxxx xxxx xxxx xxxx xxxx xxxx" \
+  -u "username:xxxx xxxx xxxx xxxx xxxx xxxx" \
   -H "Content-Type: application/json" \
   -d '{
     "jsonrpc": "2.0", "id": 1, "method": "tools/call",
@@ -229,7 +229,7 @@ Deletes a folder term. Pass `force: true` to hard-delete; omit or pass `false` t
 
 ```bash
 curl -s -X POST "https://example.com/wp-json/mcp/mcp-adapter-default-server" \
-  -u "admin:xxxx xxxx xxxx xxxx xxxx xxxx" \
+  -u "username:xxxx xxxx xxxx xxxx xxxx xxxx" \
   -H "Content-Type: application/json" \
   -d '{
     "jsonrpc": "2.0", "id": 1, "method": "tools/call",
@@ -278,7 +278,7 @@ Removes one or more media attachments from a folder. The REST endpoint accepts o
 
 ```bash
 curl -s -X POST "https://example.com/wp-json/mcp/mcp-adapter-default-server" \
-  -u "admin:xxxx xxxx xxxx xxxx xxxx xxxx" \
+  -u "username:xxxx xxxx xxxx xxxx xxxx xxxx" \
   -H "Content-Type: application/json" \
   -d '{
     "jsonrpc": "2.0", "id": 1, "method": "tools/call",
@@ -323,7 +323,7 @@ Returns AI-powered folder suggestions for a single media item based on its conte
 
 ```bash
 curl -s -X POST "https://example.com/wp-json/mcp/mcp-adapter-default-server" \
-  -u "admin:xxxx xxxx xxxx xxxx xxxx xxxx" \
+  -u "username:xxxx xxxx xxxx xxxx xxxx xxxx" \
   -H "Content-Type: application/json" \
   -d '{
     "jsonrpc": "2.0", "id": 1, "method": "tools/call",
