@@ -2,7 +2,7 @@
 Contributors: persoderlind
 Tags: media, folders, ai, mcp, abilities
 Requires at least: 7.0
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 8.3
 Stable tag: 1.3.0
 License: GPL-2.0-or-later
