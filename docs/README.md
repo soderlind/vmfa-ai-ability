@@ -120,6 +120,44 @@ Requires the **[vmfa-ai-organizer](https://github.com/soderlind/vmfa-ai-organize
 
 ---
 
+## WordPress 7.1 Enhancements
+
+On WordPress 7.1+ the abilities automatically pick up the newer Abilities API
+conventions (no configuration needed; earlier versions are unaffected):
+
+- **Public discovery flag** — every VMFA ability declares the top-level `public`
+  meta flag, so it is advertised alongside core abilities in REST/MCP/AI
+  discovery (`/wp-json/wp-abilities/v1/abilities`).
+- **Schema titles** — each input/output schema property is given a Title Case
+  `title` (e.g. `folder_id` → "Folder ID") so clients can present and select
+  fields consistently. Descriptions remain the primary translatable metadata.
+- **Typed REST input** — WordPress coerces `run` request input to the declared
+  schema types, so integers, booleans, and integer arrays arrive natively typed.
+
+## Extending — Hooks
+
+### `vmfa_ai_ability_invoked` (action)
+
+Fires once for **every** VMFA ability invocation — including calls that are
+denied by their permission check or short-circuited — for auditing, telemetry,
+or accounting. Built on the WordPress 7.1 `wp_ability_invoked` action; on earlier
+versions it simply never fires.
+
+The payload deliberately excludes the raw ability input, which may contain
+sensitive data.
+
+```php
+add_action(
+  'vmfa_ai_ability_invoked',
+  function ( array $event ): void {
+    // $event = [ 'ability' => 'vmfo/delete-folder', 'user_id' => 12, 'timestamp' => 1750000000 ]
+    error_log( sprintf( 'VMFA ability %s by user %d', $event['ability'], $event['user_id'] ) );
+  }
+);
+```
+
+---
+
 ## Tutorials
 
 | Level | Tutorial | What You'll Learn |

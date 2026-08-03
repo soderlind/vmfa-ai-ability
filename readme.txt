@@ -2,9 +2,9 @@
 Contributors: persoderlind
 Tags: media, folders, ai, mcp, abilities
 Requires at least: 7.0
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 8.3
-Stable tag: 1.2.0
+Stable tag: 1.3.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,11 @@ For client configuration (Claude, GitHub Copilot, Cursor) and usage examples, se
 4. Activate the plugin through WordPress admin
 
 == Changelog ==
+
+= 1.3.0 =
+* Added: Top-level `public` meta flag on all abilities for WordPress 7.1 REST/MCP/AI discovery.
+* Added: Automatic Title Case schema `title` for every ability input/output property.
+* Added: `vmfa_ai_ability_invoked` action hook for auditing/telemetry (WordPress 7.1 `wp_ability_invoked`; raw input omitted).
 
 = 1.2.0 =
 * Added: MCP abilities for base plugin and 4 add-ons (Rules Engine, Media Cleanup, Folder Exporter, AI Organizer)
