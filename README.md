@@ -5,8 +5,6 @@ Exposes Virtual Media Folders operations as WordPress Abilities API tools for AI
 [Description](#description) | [Requirements](#requirements) | [Installation](#installation) | [MCP Integration](#mcp-integration) | [Tutorials](#tutorials) | [Changelog](CHANGELOG.md)
 
 
-<img width="1280" height="640" alt="vmfa-ai-ability-twitter-promo" src="https://github.com/user-attachments/assets/d1f7e012-eefa-4b22-b796-4985788ca49d" />
-
 
 ## Description
 
