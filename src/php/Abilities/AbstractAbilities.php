@@ -68,6 +68,9 @@ abstract class AbstractAbilities {
 		bool $destructive = false
 	): array {
 		return [
+			// Top-level public flag (WP 7.1): advertises the ability to REST/MCP/AI
+			// discovery clients. Harmless on earlier versions (extra meta key).
+			'public'       => true,
 			'show_in_rest' => true,
 			'mcp'          => [
 				'public' => true,
