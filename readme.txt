@@ -4,7 +4,7 @@ Tags: media, folders, ai, mcp, abilities
 Requires at least: 7.0
 Tested up to: 7.1
 Requires PHP: 8.3
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,9 @@ For client configuration (Claude, GitHub Copilot, Cursor) and usage examples, se
 4. Activate the plugin through WordPress admin
 
 == Changelog ==
+
+= 1.3.1 =
+* Fixed: Prevent a fatal error when the "Virtual Media Folders" parent plugin is missing or older than 2.0.0; show an admin notice instead.
 
 = 1.3.0 =
 * Added: Top-level `public` meta flag on all abilities for WordPress 7.1 REST/MCP/AI discovery.

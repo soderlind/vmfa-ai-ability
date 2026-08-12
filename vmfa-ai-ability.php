@@ -3,7 +3,7 @@
  * Plugin Name:       Virtual Media Folders - AI Ability
  * Plugin URI:        https://github.com/soderlind/vmfa-ai-ability
  * Description:       Exposes Virtual Media Folders operations as WordPress Abilities API tools for AI agents and MCP adapters. Add-on for Virtual Media Folders.
- * Version:           1.3.0
+ * Version:           1.3.1
  * Requires at least: 6.8
  * Requires PHP:      8.3
  * Requires Plugins:  virtual-media-folders
@@ -24,7 +24,7 @@ namespace VMFAAiAbility;
 defined( 'ABSPATH' ) || exit;
 
 // Plugin constants.
-define( 'VMFA_AI_ABILITY_VERSION', '1.1.0' );
+define( 'VMFA_AI_ABILITY_VERSION', '1.3.1' );
 define( 'VMFA_AI_ABILITY_FILE', __FILE__ );
 define( 'VMFA_AI_ABILITY_PATH', plugin_dir_path( __FILE__ ) );
 define( 'VMFA_AI_ABILITY_URL', plugin_dir_url( __FILE__ ) );
@@ -53,8 +53,32 @@ if ( ! class_exists( \Soderlind\WordPress\GitHubUpdater::class ) ) {
  * @return void
  */
 function init(): void {
+	// The parent plugin (Virtual Media Folders 2.0.0+) provides the add-on base class.
+	if ( ! class_exists( \VirtualMediaFolders\Addon\AbstractPlugin::class ) ) {
+		add_action( 'admin_notices', __NAMESPACE__ . '\\missing_parent_notice' );
+		return;
+	}
+
 	// Boot the plugin.
 	Plugin::get_instance()->init();
 }
 
 add_action( 'plugins_loaded', __NAMESPACE__ . '\\init', 15 );
+
+/**
+ * Admin notice shown when the required parent plugin is missing or outdated.
+ *
+ * @return void
+ */
+function missing_parent_notice(): void {
+	if ( ! current_user_can( 'activate_plugins' ) ) {
+		return;
+	}
+	printf(
+		'<div class="notice notice-error"><p>%s</p></div>',
+		esc_html__(
+			'Virtual Media Folders - AI Ability requires the "Virtual Media Folders" plugin (version 2.0.0 or later) to be installed and active.',
+			'vmfa-ai-ability'
+		)
+	);
+}
