@@ -4,7 +4,7 @@ Tags: media, folders, ai, mcp, abilities
 Requires at least: 7.0
 Tested up to: 7.1
 Requires PHP: 8.3
-Stable tag: 1.3.1
+Stable tag: 1.4.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,10 @@ For client configuration (Claude, GitHub Copilot, Cursor) and usage examples, se
 4. Activate the plugin through WordPress admin
 
 == Changelog ==
+
+= 1.4.0 =
+* Security: Add tier-2 per-object authorization to media abilities. `vmfo/add-to-folder`, `vmfo/remove-from-folder`, and `vmfo/get-suggestions` now verify the caller can edit each target attachment (`edit_post`), closing an IDOR gap where any user with `upload_files` could act on attachments they do not own.
+* Security: Deny ability invocations made with no authenticated user (MCP/agent/background contexts) and return a uniform HTTP 403 for all authorization failures.
 
 = 1.3.1 =
 * Fixed: Prevent a fatal error when the "Virtual Media Folders" parent plugin is missing or older than 2.0.0; show an admin notice instead.

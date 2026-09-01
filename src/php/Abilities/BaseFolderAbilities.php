@@ -555,6 +555,13 @@ final class BaseFolderAbilities extends AbstractAbilities {
 			return $attachment_validation;
 		}
 
+		// Tier 2: this ability assigns terms directly (bypassing the REST route),
+		// so re-check edit rights against each target attachment.
+		$authorized = self::authorize_attachments( $attachment_ids, 'edit_post' );
+		if ( is_wp_error( $authorized ) ) {
+			return $authorized;
+		}
+
 		$rest_api = new RestApi();
 		$results  = [];
 
@@ -671,6 +678,12 @@ final class BaseFolderAbilities extends AbstractAbilities {
 			);
 		}
 
+		// Tier 2: re-check edit rights against each target attachment.
+		$authorized = self::authorize_attachments( $attachment_ids, 'edit_post' );
+		if ( is_wp_error( $authorized ) ) {
+			return $authorized;
+		}
+
 		// The REST endpoint accepts one media_id at a time; loop per attachment.
 		$results = [];
 		foreach ( $attachment_ids as $attachment_id ) {
@@ -705,6 +718,13 @@ final class BaseFolderAbilities extends AbstractAbilities {
 
 		if ( $media_id < 1 ) {
 			return new WP_Error( 'ability_invalid_input', __( 'A valid media_id is required.', 'vmfa-ai-ability' ) );
+		}
+
+		// Tier 2: suggestions expose data about a specific attachment; confirm the
+		// caller may edit it rather than any authenticated uploader reading any id.
+		$authorized = self::authorize_attachment( $media_id, 'edit_post' );
+		if ( is_wp_error( $authorized ) ) {
+			return $authorized;
 		}
 
 		return self::rest_request( 'GET', '/vmfo/v1/suggestions/' . $media_id );

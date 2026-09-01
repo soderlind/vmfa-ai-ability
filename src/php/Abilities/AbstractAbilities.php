@@ -137,4 +137,77 @@ abstract class AbstractAbilities {
 			[ 'status' => rest_authorization_required_code() ]
 		);
 	}
+
+	/**
+	 * Standard 403 authorization error.
+	 *
+	 * Both permission tiers return this shape so a denial can never be mistaken
+	 * for an application-level failure payload.
+	 *
+	 * @param string $message Human-readable reason.
+	 * @return \WP_Error
+	 */
+	protected static function forbidden( string $message = '' ): \WP_Error {
+		if ( '' === $message ) {
+			$message = __( 'You do not have permission to perform this action.', 'vmfa-ai-ability' );
+		}
+		// Uniform 403 for both permission tiers (rule 1): a denial must never be
+		// ambiguous with the 401 that rest_authorization_required_code() returns
+		// for anonymous callers.
+		return new \WP_Error( 'rest_forbidden', $message, [ 'status' => 403 ] );
+	}
+
+	/**
+	 * Tier-2 per-object authorization for a single attachment.
+	 *
+	 * The tier-1 permission_callback only proves a coarse capability
+	 * (e.g. `upload_files`) before the object id is known. This re-checks the
+	 * singular meta-capability against THIS attachment so ownership, locking,
+	 * and post-type rules are honored — closing the IDOR gap where a caller
+	 * could act on an attachment id they cannot actually edit.
+	 *
+	 * Also confirms an authenticated principal exists, because MCP/agent or
+	 * background invocations may run with no current user.
+	 *
+	 * @param int    $attachment_id Attachment (post) ID.
+	 * @param string $cap           Singular meta-capability, e.g. 'edit_post' or 'delete_post'.
+	 * @return true|\WP_Error
+	 */
+	protected static function authorize_attachment( int $attachment_id, string $cap = 'edit_post' ): true|\WP_Error {
+		if ( get_current_user_id() <= 0 ) {
+			return self::forbidden( __( 'Authentication required.', 'vmfa-ai-ability' ) );
+		}
+
+		$attachment = $attachment_id > 0 ? get_post( $attachment_id ) : null;
+		if ( ! $attachment || 'attachment' !== $attachment->post_type ) {
+			return new \WP_Error( 'rest_media_not_found', __( 'Media not found.', 'vmfa-ai-ability' ), [ 'status' => 404 ] );
+		}
+
+		if ( ! current_user_can( $cap, $attachment_id ) ) {
+			return self::forbidden();
+		}
+
+		return true;
+	}
+
+	/**
+	 * Tier-2 per-object authorization for a set of attachments.
+	 *
+	 * Denies the whole batch on the first attachment the caller cannot act on,
+	 * so a partially-authorized request never silently succeeds.
+	 *
+	 * @param array<int, int> $attachment_ids Attachment (post) IDs.
+	 * @param string          $cap            Singular meta-capability.
+	 * @return true|\WP_Error
+	 */
+	protected static function authorize_attachments( array $attachment_ids, string $cap = 'edit_post' ): true|\WP_Error {
+		foreach ( $attachment_ids as $attachment_id ) {
+			$authorized = self::authorize_attachment( (int) $attachment_id, $cap );
+			if ( is_wp_error( $authorized ) ) {
+				return $authorized;
+			}
+		}
+
+		return true;
+	}
 }

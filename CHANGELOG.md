@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2026-09-01
+
+### Security
+
+- Add tier-2 per-object authorization to media abilities. `vmfo/add-to-folder`, `vmfo/remove-from-folder`, and `vmfo/get-suggestions` now verify the caller can edit each target attachment (`edit_post`), closing an IDOR gap where any user with `upload_files` could act on attachments they do not own.
+- Deny ability invocations made with no authenticated user (MCP/agent/background contexts) and return a uniform HTTP 403 for all authorization failures.
+
 ## [1.3.1] - 2026-08-12
 
 ### Fixed
