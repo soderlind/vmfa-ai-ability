@@ -562,14 +562,28 @@ final class BaseFolderAbilities extends AbstractAbilities {
 			return $authorized;
 		}
 
+		$limited = self::enforce_rate_limit( 'write', self::RATE_LIMIT_WRITE );
+		if ( is_wp_error( $limited ) ) {
+			return $limited;
+		}
+
 		$rest_api = new RestApi();
 		$results  = [];
 
+		// Best-effort per item: a mid-loop failure is reported in `results` rather
+		// than aborting, so the caller always sees which items were assigned. Each
+		// assignment is idempotent (term append), so retrying the batch is safe.
 		foreach ( $attachment_ids as $attachment_id ) {
 			$result = $rest_api->assign_media_to_folder( $attachment_id, $folder_id );
 
 			if ( is_wp_error( $result ) ) {
-				return $result;
+				$results[] = [
+					'success'   => false,
+					'media_id'  => $attachment_id,
+					'folder_id' => $folder_id,
+					'message'   => $result->get_error_message(),
+				];
+				continue;
 			}
 
 			$results[] = [
@@ -580,8 +594,10 @@ final class BaseFolderAbilities extends AbstractAbilities {
 			];
 		}
 
+		$success_count = count( array_filter( $results, static fn( array $r ): bool => $r['success'] ) );
+
 		return [
-			'success'         => true,
+			'success'         => $success_count === count( $attachment_ids ),
 			'folder_id'       => $folder_id,
 			'attachment_ids'  => $attachment_ids,
 			'processed_count' => count( $results ),
@@ -658,6 +674,11 @@ final class BaseFolderAbilities extends AbstractAbilities {
 			return new WP_Error( 'ability_invalid_input', __( 'A valid folder_id is required.', 'vmfa-ai-ability' ) );
 		}
 
+		$limited = self::enforce_rate_limit( 'destructive', self::RATE_LIMIT_DESTRUCTIVE );
+		if ( is_wp_error( $limited ) ) {
+			return $limited;
+		}
+
 		$params = [ 'force' => (bool) ( $input['force'] ?? false ) ];
 
 		return self::rest_request( 'DELETE', '/vmfo/v1/folders/' . $folder_id, $params );
@@ -682,6 +703,11 @@ final class BaseFolderAbilities extends AbstractAbilities {
 		$authorized = self::authorize_attachments( $attachment_ids, 'edit_post' );
 		if ( is_wp_error( $authorized ) ) {
 			return $authorized;
+		}
+
+		$limited = self::enforce_rate_limit( 'write', self::RATE_LIMIT_WRITE );
+		if ( is_wp_error( $limited ) ) {
+			return $limited;
 		}
 
 		// The REST endpoint accepts one media_id at a time; loop per attachment.
