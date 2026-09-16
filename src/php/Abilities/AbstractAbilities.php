@@ -158,6 +158,74 @@ abstract class AbstractAbilities {
 	}
 
 	/**
+	 * Default per-minute call budget for batch/write abilities.
+	 *
+	 * @var int
+	 */
+	protected const RATE_LIMIT_WRITE = 30;
+
+	/**
+	 * Default per-minute call budget for destructive abilities.
+	 *
+	 * @var int
+	 */
+	protected const RATE_LIMIT_DESTRUCTIVE = 10;
+
+	/**
+	 * Enforce a per-user, fixed-window call-rate limit for a mutating ability.
+	 *
+	 * Caps how many times a caller can invoke a bucket of abilities per window,
+	 * bounding the blast radius of an agent loop that mass-mutates or mass-deletes
+	 * media. Backed by a transient so it needs no schema and survives object cache.
+	 *
+	 * @param string $action Bucket key shared by related abilities (e.g. 'destructive').
+	 * @param int    $limit  Max invocations allowed in the window.
+	 * @param int    $window Window length in seconds.
+	 * @return true|\WP_Error 429 WP_Error when the budget is exhausted.
+	 */
+	protected static function enforce_rate_limit( string $action, int $limit, int $window = MINUTE_IN_SECONDS ): true|\WP_Error {
+		/**
+		 * Filter the rate-limit budget for a bucket. Return 0 or less to disable.
+		 *
+		 * @param int    $limit  Default budget for this bucket.
+		 * @param string $action Bucket key.
+		 */
+		$limit = (int) apply_filters( 'vmfa_ai_ability_rate_limit', $limit, $action );
+		if ( $limit <= 0 ) {
+			return true;
+		}
+
+		$user_id = get_current_user_id();
+		$key     = 'vmfa_ai_rl_' . md5( $action . '|' . $user_id );
+		$now     = time();
+		$bucket  = get_transient( $key );
+
+		if ( ! is_array( $bucket ) || ! isset( $bucket['count'], $bucket['reset'] ) || $bucket['reset'] <= $now ) {
+			$bucket = [
+				'count' => 0,
+				'reset' => $now + $window,
+			];
+		}
+
+		if ( $bucket['count'] >= $limit ) {
+			$retry_after = max( 1, (int) $bucket['reset'] - $now );
+			return new \WP_Error(
+				'rate_limit_exceeded',
+				__( 'Rate limit exceeded. Please wait a moment and try again.', 'vmfa-ai-ability' ),
+				[
+					'status'      => 429,
+					'retry_after' => $retry_after,
+				]
+			);
+		}
+
+		++$bucket['count'];
+		set_transient( $key, $bucket, max( 1, (int) $bucket['reset'] - $now ) );
+
+		return true;
+	}
+
+	/**
 	 * Tier-2 per-object authorization for a single attachment.
 	 *
 	 * The tier-1 permission_callback only proves a coarse capability

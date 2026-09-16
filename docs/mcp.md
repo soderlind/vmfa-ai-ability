@@ -82,6 +82,10 @@ Error response (ability returned `WP_Error`, or JSON-RPC error):
 }
 ```
 
+When an ability returns a `WP_Error`, its `code` and `data.status` (HTTP status)
+are forwarded through the adapter so an agent can dispatch on `code` directly.
+See [Error Codes](#error-codes) for the full taxonomy.
+
 ## Discovering Available Abilities
 
 To list all registered abilities on a site:
@@ -136,6 +140,47 @@ Only abilities with `meta.mcp.public = true` are exposed. All abilities register
 }
 ```
 
+## Error Codes
+
+When an ability fails it returns a `WP_Error` whose `code`, human-readable
+`message`, and `data.status` (HTTP status) are forwarded through the MCP adapter.
+Dispatch on `code`; it is stable across releases.
+
+### Auth & permissions (HTTP 403 / 401)
+
+| Code | Cause | Fix |
+|---|---|---|
+| `rest_forbidden` | Caller lacks the required capability, or the invocation ran with no authenticated user (MCP/agent/background context). Uniform 403 for every authorization failure. | Authenticate as a user with the capability listed under [Required Permissions](#required-permissions) and edit rights on the target attachment(s). |
+
+### Not found (HTTP 404)
+
+| Code | Cause | Fix |
+|---|---|---|
+| `rest_folder_not_found` | `folder_id` does not resolve to a folder term. | Re-resolve the folder with `vmfo/list-folders`. |
+| `rest_media_not_found` | An `attachment_id` is not an existing attachment post. | Confirm the media ID; re-list media. |
+
+### Validation (HTTP 400)
+
+| Code | Cause | Fix |
+|---|---|---|
+| `ability_invalid_input` | A required argument is missing or invalid (e.g. no `folder_id`, empty `attachment_ids`, empty folder name). | Supply the required arguments per the ability's input schema. |
+| `parent_not_exists` | `parent_id` on create/update does not resolve to a folder. | Use a valid parent folder ID, or `0` for top-level. |
+| `term_exists` | A folder with the same name already exists under the parent. | Use a different name, or add media to the existing folder. |
+| `empty_term_name` | Folder name resolved to an empty string. | Provide a non-empty `name`. |
+| `invalid_term` / `invalid_taxonomy` | Underlying taxonomy rejected the operation. | Inspect the message; verify the folder taxonomy is registered. |
+
+### Rate limit (HTTP 429)
+
+| Code | Cause | Fix |
+|---|---|---|
+| `rate_limit_exceeded` | Per-user write budget exhausted. Batch/write abilities are capped at 30 calls/min; destructive abilities (`vmfo/delete-folder`, `vmfo-cleanup/trash`, `vmfo-cleanup/delete`) at 10 calls/min. `data.retry_after` gives the seconds until reset. | Wait `retry_after` seconds and retry; batch more attachment IDs per call. Tune via the `vmfa_ai_ability_rate_limit` filter (return `0` to disable). |
+
+### Passthrough
+
+| Code | Cause | Fix |
+|---|---|---|
+| `rest_error` (or the upstream code) | A delegated REST request returned an error; the underlying code, message, and status are forwarded unchanged. | Handle per the forwarded code/status. |
+
 ## Troubleshooting
 
 | Symptom | Likely cause |
@@ -144,6 +189,7 @@ Only abilities with `meta.mcp.public = true` are exposed. All abilities register
 | Tool not found | `mcp-adapter-execute-ability` not listed in `tools/list` — check adapter plugin is active |
 | Folder mismatch | Resolve folders by `path`, not just `name` |
 | Upload OK but assignment failed | Confirm the media ID is an attachment post and folder ID exists |
+| `429` / `rate_limit_exceeded` | Too many write/destructive calls per minute; wait `retry_after` seconds or batch more IDs per call |
 
 ## Smoke Test
 

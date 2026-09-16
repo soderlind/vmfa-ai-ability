@@ -305,6 +305,11 @@ final class MediaCleanupAbilities extends AbstractAbilities {
 
 	/** @param array<string, mixed> $input */
 	public static function execute_archive( array $input ): array|\WP_Error {
+		$limited = self::enforce_rate_limit( 'write', self::RATE_LIMIT_WRITE );
+		if ( is_wp_error( $limited ) ) {
+			return $limited;
+		}
+
 		return self::rest_request( 'POST', '/vmfa-cleanup/v1/actions/archive', [
 			'ids' => $input['attachment_ids'] ?? [],
 		] );
@@ -312,6 +317,11 @@ final class MediaCleanupAbilities extends AbstractAbilities {
 
 	/** @param array<string, mixed> $input */
 	public static function execute_trash( array $input ): array|\WP_Error {
+		$limited = self::enforce_rate_limit( 'destructive', self::RATE_LIMIT_DESTRUCTIVE );
+		if ( is_wp_error( $limited ) ) {
+			return $limited;
+		}
+
 		return self::rest_request( 'POST', '/vmfa-cleanup/v1/actions/trash', [
 			'ids' => $input['attachment_ids'] ?? [],
 		] );
@@ -319,6 +329,11 @@ final class MediaCleanupAbilities extends AbstractAbilities {
 
 	/** @param array<string, mixed> $input */
 	public static function execute_delete( array $input ): array|\WP_Error {
+		$limited = self::enforce_rate_limit( 'destructive', self::RATE_LIMIT_DESTRUCTIVE );
+		if ( is_wp_error( $limited ) ) {
+			return $limited;
+		}
+
 		return self::rest_request( 'POST', '/vmfa-cleanup/v1/actions/delete', [
 			'ids' => $input['attachment_ids'] ?? [],
 		] );
