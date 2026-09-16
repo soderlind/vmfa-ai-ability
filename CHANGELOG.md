@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-09-16
+
 ### Added
 
 - Per-user, transient-backed call-rate limiting on mutating abilities to bound the blast radius of agent loops. Batch/write abilities (`vmfo/add-to-folder`, `vmfo/remove-from-folder`, `vmfo-cleanup/archive`) are capped at 30 calls/min; destructive abilities (`vmfo/delete-folder`, `vmfo-cleanup/trash`, `vmfo-cleanup/delete`) at 10 calls/min. Exhaustion returns HTTP 429 `rate_limit_exceeded` with a `retry_after`. Tunable via the `vmfa_ai_ability_rate_limit` filter.
@@ -65,7 +67,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `vmfo/add-to-folder` ability - Assigns media items to a folder
 - MCP adapter support for AI agents (Claude, Copilot, Cursor)
 
-[Unreleased]: https://github.com/soderlind/vmfa-ai-ability/compare/1.4.0...HEAD
+[Unreleased]: https://github.com/soderlind/vmfa-ai-ability/compare/1.5.0...HEAD
+[1.5.0]: https://github.com/soderlind/vmfa-ai-ability/compare/1.4.0...1.5.0
 [1.4.0]: https://github.com/soderlind/vmfa-ai-ability/compare/1.3.1...1.4.0
 [1.3.1]: https://github.com/soderlind/vmfa-ai-ability/compare/1.3.0...1.3.1
 [1.3.0]: https://github.com/soderlind/vmfa-ai-ability/compare/1.2.0...1.3.0

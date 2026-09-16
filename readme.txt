@@ -4,7 +4,7 @@ Tags: media, folders, ai, mcp, abilities
 Requires at least: 7.0
 Tested up to: 7.1
 Requires PHP: 8.3
-Stable tag: 1.4.0
+Stable tag: 1.5.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,11 @@ For client configuration (Claude, GitHub Copilot, Cursor) and usage examples, se
 4. Activate the plugin through WordPress admin
 
 == Changelog ==
+
+= 1.5.0 =
+* Added: Per-user, transient-backed call-rate limiting on mutating abilities. Write abilities (`vmfo/add-to-folder`, `vmfo/remove-from-folder`, `vmfo-cleanup/archive`) are capped at 30 calls/min; destructive abilities (`vmfo/delete-folder`, `vmfo-cleanup/trash`, `vmfo-cleanup/delete`) at 10 calls/min. Exhaustion returns HTTP 429 `rate_limit_exceeded` with a `retry_after`; tunable via the `vmfa_ai_ability_rate_limit` filter.
+* Added: Documented error-code taxonomy in `docs/mcp.md` (code to HTTP status to cause to fix).
+* Changed: `vmfo/add-to-folder` now reports per-item results on a mid-batch failure instead of aborting, matching `vmfo/remove-from-folder`. Assignments are idempotent and safe to retry.
 
 = 1.4.0 =
 * Security: Add tier-2 per-object authorization to media abilities. `vmfo/add-to-folder`, `vmfo/remove-from-folder`, and `vmfo/get-suggestions` now verify the caller can edit each target attachment (`edit_post`), closing an IDOR gap where any user with `upload_files` could act on attachments they do not own.
